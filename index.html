@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Test</title>
+
+  <script>
+    // Googleから取得したOAuth 2.0 のClient ID
+    const CLIENT_ID = "702210421539-sapn6s5f8a9q490nvqd232ljepmsrklk.apps.googleusercontent.com";
+    // 認証時にリクエストする機能の範囲
+    var SCOPES = ['https://www.googleapis.com/auth/drive'];
+
+    var oauthToken;
+    function checkAuth() {
+        gapi.auth.authorize(
+            {
+                'client_id': CLIENT_ID,
+                'scope': SCOPES.join(' '),
+                'immediate': true
+            },
+            function (authResult) { // 認証成功/失敗時に呼ばれるコールバック関数。
+                oauthToken = authResult.access_token; // oauthTokenを取っておく
+                console.log(authResult);
+            }); 
+    }
+    function onApiLoad() {
+      window.gapi.load('picker', { }); // これも第二引数を {'callback': 関数名}とすることで、コールバック関数を呼ばせられます。
+    }
+  </script>
+  <script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
+  <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+</head>
+<body>
+  
+</body>
+</html>
